@@ -16,8 +16,8 @@ public class userAtmAPI {
     private userAtmService userAtm;
 
     @PostMapping("/withdraw/")
-    public ResponseEntity<String> withdraw(@RequestParam Integer userId, @RequestParam int amount) {
-        if (userAtm.withdraw(userId, amount)) {
+    public ResponseEntity<String> withdraw(@RequestParam Integer accountNumber, @RequestParam double amount) {
+        if (userAtm.withdraw(accountNumber, amount)) {
             return ResponseEntity.ok("Successfully Withdrawed: "+amount);
         } else {
             return ResponseEntity.status(400).body("Withdrawal failed.");
@@ -25,8 +25,8 @@ public class userAtmAPI {
     }
 
     @PostMapping("/deposit/")
-    public ResponseEntity<String> deposit(@RequestParam Integer userId, @RequestParam int amount) {
-        if (userAtm.deposit(userId, amount)) {
+    public ResponseEntity<String> deposit(@RequestParam Integer accountNumber, @RequestParam double amount) {
+        if (userAtm.deposit(accountNumber, amount)) {
             return ResponseEntity.ok("Successfully Deposited: "+amount);
         } else {
             return ResponseEntity.status(400).body("Deposit failed.");
@@ -34,15 +34,15 @@ public class userAtmAPI {
     }
 
     @GetMapping("/balance/")
-    public ResponseEntity<Double> checkBalance(@RequestParam Integer userId) {
-        double balance = userAtm.checkBalance(userId);
+    public ResponseEntity<Double> checkBalance(@RequestParam Integer accountNumber) {
+        double balance = userAtm.checkBalance(accountNumber);
         return ResponseEntity.ok(balance);
     }
 
     @PostMapping("/transfer/")
-    public ResponseEntity<String> transfer(@RequestParam Integer userId1,@RequestParam Integer userId2, @RequestParam int amount){
-        if(userAtm.transfer(userId1,userId2,amount)){
-            return ResponseEntity.ok("user with id:'"+userId1+"' transfered to user with the id: '"+userId2+"' "+amount+"$");
+    public ResponseEntity<String> transfer(@RequestParam Integer accountNumber1,@RequestParam Integer accountNumber2, @RequestParam double amount){
+        if(userAtm.transfer(accountNumber1,accountNumber2,amount)){
+            return ResponseEntity.ok("user with id:'"+accountNumber1+"' transfered to user with the id: '"+accountNumber2+"' "+amount+"$");
         } else {
             return ResponseEntity.status(400).body("transfer failed.");
         }

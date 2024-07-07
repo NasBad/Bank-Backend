@@ -17,7 +17,7 @@ public class userCrudService {
     public users addUser( users user){
         System.out.println("Adding user...");
         user.setUserBalance(0);
-        user.setActive(true);
+        user.setStatus("Active");
         return userDAO.save(user);
     }
 
@@ -26,19 +26,18 @@ public class userCrudService {
         return userDAO.findAll();
     }
 
-    public Optional<users> getUserById(Integer userId){
-        System.out.println("Finding user with the id: "+userId);
-        return userDAO.findById(userId);
+    public Optional<users> getUserByAccountNumber(Integer accountNumber){
+        System.out.println("Finding user with the account Number: "+accountNumber);
+        return userDAO.findByAccountNumber(accountNumber);
     }
 
-    public users updateUser(Integer userId,users userDetails){
-        Optional<users> usersOptional = userDAO.findById(userId);
+    public users updateUser(Integer accountNumber,users userDetails){
+        Optional<users> usersOptional = userDAO.findByAccountNumber(accountNumber);
         if(usersOptional.isPresent()){
             users user = usersOptional.get();
             user.setUserName(userDetails.getUserName());
             user.setUserEmail(userDetails.getUserEmail());
             user.setUserPassword(userDetails.getUserPassword());
-            user.setUserBalance(userDetails.getUserBalance());
             return userDAO.save(user);
         }
         else {
@@ -46,12 +45,36 @@ public class userCrudService {
         }
     }
 
-    public void deleteUser(Integer userId){
-        Optional<users> userDetail = userDAO.findById(userId);
-        System.out.println("Deleting user with the id: "+userId);
+    public void deleteUser(Integer accountNumber){
+        Optional<users> userDetail = userDAO.findByAccountNumber(accountNumber);
+        System.out.println("Deleting user with the account Number: "+accountNumber);
         users user = userDetail.get();
-        user.setActive(false);
+        user.setStatus("Deleted");
+        user.setUserBalance(0.0);
         userDAO.save(user);
     }
 
+    public void activateUser(Integer accountNumber){
+        Optional<users> userDetail = userDAO.findByAccountNumber(accountNumber);
+        System.out.println("Activating user with the account Number: "+accountNumber);
+        users user = userDetail.get();
+        user.setStatus("Active");
+        userDAO.save(user);
+    }
+
+    public void freezUser(Integer accountNumber){
+        Optional<users> userDetail = userDAO.findByAccountNumber(accountNumber);
+        System.out.println("Freezing user with the account Number: "+accountNumber);
+        users user = userDetail.get();
+        user.setStatus("Freezed");
+        userDAO.save(user);
+    }
+
+    public void blockUser(Integer accountNumber){
+        Optional<users> userDetail = userDAO.findByAccountNumber(accountNumber);
+        System.out.println("Blocking user with the account Number: "+accountNumber);
+        users user = userDetail.get();
+        user.setStatus("Blocked");
+        userDAO.save(user);
+    }
 }

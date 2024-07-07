@@ -9,6 +9,10 @@ public class users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "account_number")
+    private Integer accountNumber;
+
     @Column(name="user_name")
     private String userName;
 
@@ -19,21 +23,22 @@ public class users {
     private String userPassword;
 
     @Column(name="user_balance")
-    private int userBalance;
+    private double userBalance;
 
-    @Column(name="is_active")
-    private boolean isActive;
+    @Column(name="Status")
+    private String Status;
 
     public users() {
         System.out.println("user defould CTOR");
     }
 
-    public users( String userName, String userEmail, String userPassword,int userBalance,boolean isActive) {
+    public users( String userName, String userEmail, String userPassword,double userBalance,String Status,Integer accountNumber) {
         this.userName = userName;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
         this.userBalance=userBalance;
-        this.isActive=isActive;
+        this.Status=Status;
+        this.accountNumber=accountNumber;
     }
 
     public int getId() {
@@ -68,19 +73,27 @@ public class users {
         this.userPassword = userPassword;
     }
 
-    public int getUserBalance() {
+    public double getUserBalance() {
         return userBalance;
     }
 
-    public void setUserBalance(int userBalance) {
+    public void setUserBalance(double userBalance) {
         this.userBalance = userBalance;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public String getStatus() {
+        return Status;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setStatus(String status) {
+        Status = status;
+    }
+
+    public Integer getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(Integer accountNumber) {
+        this.accountNumber = accountNumber;
     }
 }

@@ -28,23 +28,43 @@ public class userCrudAPI {
     }
 
     @GetMapping("/get/")
-    public ResponseEntity<users> getUserById(@RequestParam  Integer userId) {
-        Optional<users> user = userService.getUserById(userId);
+    public ResponseEntity<users> getUserById(@RequestParam  Integer accountNumber) {
+        Optional<users> user = userService.getUserByAccountNumber(accountNumber);
         return ResponseEntity.ok(user.get());
     }
 
     @PutMapping("/updateUser/")
-    public ResponseEntity<users> updateUser(@RequestParam Integer userId, @RequestBody users userDetails) {
-        users updatedUser = userService.updateUser(userId, userDetails);
+    public ResponseEntity<users> updateUser(@RequestParam Integer accountNumber, @RequestBody users userDetails) {
+        users updatedUser = userService.updateUser(accountNumber, userDetails);
         return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("/delete/")
-    public ResponseEntity<Void> deleteUser(@RequestParam  Integer userId){
-        Optional<users> userDetail = userService.getUserById(userId);
-        userService.deleteUser(userId);
+    public ResponseEntity<Void> deleteUser(@RequestParam  Integer accountNumber){
+        Optional<users> userDetail = userService.getUserByAccountNumber(accountNumber);
+        userService.deleteUser(accountNumber);
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/activate/")
+    public ResponseEntity<Void> activateUser(@RequestParam  Integer accountNumber){
+        Optional<users> userDetail = userService.getUserByAccountNumber(accountNumber);
+        userService.activateUser(accountNumber);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/freez/")
+    public ResponseEntity<Void> freezUser(@RequestParam  Integer accountNumber){
+        Optional<users> userDetail = userService.getUserByAccountNumber(accountNumber);
+        userService.freezUser(accountNumber);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/block/")
+    public ResponseEntity<Void> blockUser(@RequestParam  Integer accountNumber){
+        Optional<users> userDetail = userService.getUserByAccountNumber(accountNumber);
+        userService.blockUser(accountNumber);
+        return ResponseEntity.ok().build();
+    }
 
 }

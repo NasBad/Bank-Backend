@@ -13,36 +13,46 @@ public class userAtmService {
     @Autowired
     private userCrudService userService;
 
-    public boolean withdraw(Integer userId,int amount){
-        Optional<users> usersOptional = userService.getUserById(userId);
+    public boolean withdraw(Integer accountNumber,double amount){
+        Optional<users> usersOptional = userService.getUserByAccountNumber(accountNumber);
             users user = usersOptional.get();
-            if (user.getUserBalance() >= amount && user.isActive()) {
+            if (user.getUserBalance() >= amount && user.getStatus().equals("Active")) {
                 user.setUserBalance(user.getUserBalance() - amount);
-                userService.updateUser(userId, user);
+                userService.updateUser(accountNumber, user);
                 return true;
             }
             System.out.println("Insufficient funds.");
             return false;
     }
 
-    public boolean deposit(Integer userId,int amount){
-        Optional<users> usersOptional=userService.getUserById(userId);
+    public boolean deposit(Integer accountNumber,double amount){
+        Optional<users> usersOptional=userService.getUserByAccountNumber(accountNumber);
         users user=usersOptional.get();
-        user.setUserBalance(user.getUserBalance()+amount);
-        userService.updateUser(userId,user);
-        return true;
+        if (!user.getStatus().equals("Deleted")) {
+            user.setUserBalance(user.getUserBalance() + amount);
+            userService.updateUser(accountNumber, user);
+            return true;
+        }
+        System.out.println("Insufficient funds.");
+        return false;
     }
 
-    public int checkBalance(Integer userId)
+    public double checkBalance(Integer accountNumber)
     {
-        Optional<users> usersOptional = userService.getUserById(userId);
+        Optional<users> usersOptional = userService.getUserByAccountNumber(accountNumber);
         users user = usersOptional.get();
-        return user.getUserBalance();
+        if (!user.getStatus().equals("Deleted")) {
+            return user.getUserBalance();
+        }else{
+            return 0;
+        }
     }
 
-    public boolean transfer(Integer userId1,Integer userId2, int amount){
-        withdraw(userId1,amount);
-        deposit(userId2,amount);
-        return true;
+    public boolean transfer(Integer accountNumber1,Integer accountNumber2, double amount){
+        if(withdraw(accountNumber1,amount) && deposit(accountNumber2,amount))
+        {
+            return true;
+        }
+        return false;
     }
 }
