@@ -18,7 +18,7 @@ public class userAtmAPI {
     @PostMapping("/withdraw/")
     public ResponseEntity<String> withdraw(@RequestParam Integer accountNumber, @RequestParam double amount) {
         if (userAtm.withdraw(accountNumber, amount)) {
-            return ResponseEntity.ok("Successfully Withdrew: "+amount);
+            return ResponseEntity.ok("Successfully Withdrew: "+amount+"\n"+"your balance now is: "+userAtm.checkBalance(accountNumber));
         } else {
             return ResponseEntity.status(400).body("Withdrawal failed.");
         }
@@ -27,22 +27,21 @@ public class userAtmAPI {
     @PostMapping("/deposit/")
     public ResponseEntity<String> deposit(@RequestParam Integer accountNumber, @RequestParam double amount) {
         if (userAtm.deposit(accountNumber, amount)) {
-            return ResponseEntity.ok("Successfully Deposited: "+amount);
+            return ResponseEntity.ok("Successfully Deposited: "+amount+"\n"+"your balance now is: "+userAtm.checkBalance(accountNumber));
         } else {
             return ResponseEntity.status(400).body("Deposit failed.");
         }
     }
 
     @GetMapping("/balance/")
-    public ResponseEntity<Double> checkBalance(@RequestParam Integer accountNumber) {
-        double balance = userAtm.checkBalance(accountNumber);
-        return ResponseEntity.ok(balance);
+    public ResponseEntity<String> checkBalance(@RequestParam Integer accountNumber) {
+        return ResponseEntity.ok("your balance is: "+userAtm.checkBalance(accountNumber));
     }
 
     @PostMapping("/transfer/")
     public ResponseEntity<String> transfer(@RequestParam Integer accountNumber1,@RequestParam Integer accountNumber2, @RequestParam double amount){
         if(userAtm.transfer(accountNumber1,accountNumber2,amount)){
-            return ResponseEntity.ok("user with id:'"+accountNumber1+"' transfered to user with the id: '"+accountNumber2+"' "+amount+"$");
+            return ResponseEntity.ok("user with bank account Number:'"+accountNumber1+"' transfered money to user with the bank account Number: '"+accountNumber2+"' "+amount+"$ Succsessfully");
         } else {
             return ResponseEntity.status(400).body("transfer failed.");
         }

@@ -20,6 +20,19 @@ public class userCrudService {
         System.out.println("Adding user...");
         user.setUserBalance(0);
         user.setStatus("Active");
+        emailService.sendEmail(user.getUserEmail(), "MR. "+user.getUserName()+" Welcome to The National Bank of Egypt!", "Dear MR."+user.getUserName() +
+                "\n" +
+                "Welcome to The National Bank of Egypt! We're thrilled to have you onboard as our newest customer.\n" +
+                "\n" +
+                "Attached, you'll find your account details and a quick guide to our services. Should you have any questions or need assistance, please don't hesitate to contact us.\n" +
+                "\n" +
+                "We look forward to assisting you in achieving your financial goals.\n" +
+                "\n" +
+                "Best regards,\n" +
+                "\n" +
+                "Hisham Akasha\n" +
+                "CEO of\n" +
+                "The National Bank of Egypt");
         return userDAO.save(user);
     }
 
