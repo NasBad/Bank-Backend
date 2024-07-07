@@ -1,19 +1,17 @@
 package org.solarflare.BankBackend.systemFuncAPI;
 
-import org.solarflare.BankBackend.systemFunc.userAtmService;
+import org.solarflare.BankBackend.BL.AtmBL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @Component
 @RestController
 @RequestMapping("atm")
-public class userAtmAPI {
+public class UserAtmAPI {
     @Autowired
-    private userAtmService userAtm;
+    private AtmBL userAtm;
 
     @PostMapping("/withdraw/")
     public ResponseEntity<String> withdraw(@RequestParam Integer accountNumber, @RequestParam double amount) {

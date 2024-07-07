@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
-public class user {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -28,11 +28,11 @@ public class user {
     @Column(name="Status")
     private String Status;
 
-    public user() {
+    public User() {
         System.out.println("user defould CTOR");
     }
 
-    public user(String userName, String userEmail, String userPassword, double userBalance, String Status, Integer accountNumber) {
+    public User(String userName, String userEmail, String userPassword, double userBalance, String Status, Integer accountNumber) {
         this.userName = userName;
         this.userEmail = userEmail;
         this.userPassword = userPassword;

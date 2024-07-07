@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "loan")
-public class loan {
+public class Loan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +25,11 @@ public class loan {
     @Column(name="loanDate")
     private LocalDate loanDate;
 
-    public loan() {
+    public Loan() {
         System.out.println("loans :)");
     }
 
-    public loan(Integer accountNumber, double amount, double payPerMonth, LocalDate loanDate) {
+    public Loan(Integer accountNumber, double amount, double payPerMonth, LocalDate loanDate) {
         this.accountNumber = accountNumber;
         this.amount = amount;
         this.payPerMonth = payPerMonth;
