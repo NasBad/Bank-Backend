@@ -18,7 +18,7 @@ public class userAtmAPI {
     @PostMapping("/withdraw/")
     public ResponseEntity<String> withdraw(@RequestParam Integer accountNumber, @RequestParam double amount) {
         if (userAtm.withdraw(accountNumber, amount)) {
-            return ResponseEntity.ok("Successfully Withdrawed: "+amount);
+            return ResponseEntity.ok("Successfully Withdrew: "+amount);
         } else {
             return ResponseEntity.status(400).body("Withdrawal failed.");
         }
